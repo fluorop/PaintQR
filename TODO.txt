@@ -1,2 +1,3 @@
 - optimize table resize by hiding excess cells
 - draw lines between pointer events
+- include default patterns into table
