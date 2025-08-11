@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="./parrucca.css">
+	</head>
+
+	<body>
+		<div id="main-column">
+			<div id="title"> Customizing QR codes. </div>
+			<div id="upper-container">
+				<input type="text" id="text-to-encode">
+				<div class="range-menu">
+					<div class="range-container">
+						<input type="range" id="size-slider" min="21" max="177" step="4" value="25">
+					</div>
+					<label id="size-display">24×24</label>
+				</div>
+				<div id="paint-menu">
+					<button id="paint-none"></button>
+					<button id="paint-black"></button>
+					<button id="paint-white"></button>
+					<button id="paint-reverse"></button>
+				</div>
+			</div>
+			<div id="table-container"></div>
+			<div id="lower-container">
+				<button id="download">Download this.</button>
+			</div>
+			<canvas id="working-canvas" style="display: none;"></canvas>
+		</div>
+		
+		<script src="./biblioteca.js"></script>
+		<script>
+			const N = 177;
+			var container = document.getElementById("table-container");
+			var table_pos = {clientX:0, clientY:0, cellDX:0, cellDY:0};
+
+			createTable(container, N);
+
+			container.addEventListener("pointerdown", (e) => {
+				removeTouchesOnTable(container); 
+				updateTablePos(table_pos, container); 
+				paintCellByMouse(e);
+			});
+			container.addEventListener("mousemove", paintCellByMouse);
+			container.addEventListener("touchmove", (e) => paintCellByTouch(e, table_pos, container));
+
+			var range_slider = document.getElementById("size-slider");
+			range_slider.addEventListener("input", (e) => resizeTableFromRange(container, e));
+
+		</script>
+	</body>
+</html>
